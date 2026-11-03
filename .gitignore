@@ -1,0 +1,10 @@
+# Generated Vivado files
+.Xil/
+*.cache/
+*.hw/
+*.sim/
+*.runs/
+*.gen/
+*.ip_user_files/
+*.jou
+*.log
