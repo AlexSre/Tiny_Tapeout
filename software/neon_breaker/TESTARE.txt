@@ -1,0 +1,106 @@
+NEON BREAKER V2 — ghid pentru testarea celor doua proiecte
+
+V2: RGB111 (8 culori), 160x120 scalat 4x, 16 registre, magistrale Flash/RAM
+separate cu SCK comun. Joc pe CPU: 3 niveluri, 40 caramizi/nivel, vieti, scor,
+caramizi cu mai multe lovituri, pauza si restart. Un controller controleaza paleta.
+Stanga/dreapta: deplasare. A sau B: lansare. START: pauza/reluare (si lansare
+la inceput). SELECT: joc nou. La final, A/B reincepe jocul.
+V2 pastreaza corectia care evita stergerea completa a paletei intre cadre.
+
+IDENTIFICA MODULELE
+A = PMOD-ul original, cu jocul RGB222 deja in Flash. Pastreaza acest continut.
+B = al doilea PMOD, al carui Flash il programam cu jocul V2.
+In V2 folosim Flash de pe B si RAM A (CS1) de pe A. Flash-ul original de pe A
+ramane neselectat. RAM B (CS2) nu este folosita pe niciun modul.
+Astfel nu rescriem jocul original pentru a alterna intre cele doua proiecte.
+
+1. TESTEAZA INTAI VARIANTA ORIGINALA
+Foloseste cablarea existenta: A pe BIDIR, VGA pe OUTPUT, Gamepad pe INPUT.
+Jocul original este in /home/alexandru/Projects/Tiny_Tapeout_V2/software/neon_breaker.
+
+2. PROGRAMEAZA FLASH-UL LUI B — CABLARE TEMPORARA STANDARD
+Opreste alimentarea. Scoate A. Introdu B direct in BIDIR, in orientarea normala.
+Nu conecta inca firele V2. VGA poate fi scos pe durata programarii.
+Conecteaza USB la laptop, inchide Commander/Flasher/alte terminale seriale.
+Din terminal:
+
+cd /home/alexandru/Projects/Tiny_Tapeout/software/neon_breaker
+python3 upload.py --staging-wiring-confirmed
+
+Scriptul scrie neon_breaker.bin la offset 0, verifica Flash prin recitire,
+copiaza bitstreamul tt_um_neon_breaker_v2.bin pe placa si selecteaza V2 pentru
+urmatoarea pornire. Face backup in backups/. Memoria trebuie sa raporteze
+JEDEC EF7018, ca PMOD-ul original. Nu continua daca identificarea esueaza.
+IMPORTANT: scriptul NU reporneste placa; tine FPGA in reset. Dupa succes,
+deconecteaza alimentarea si recableaza exact ca mai jos. Nu da reset/repornire
+cat B este inca montat direct pe BIDIR cu bitstreamul V2 selectat.
+Daca incarcare esueaza, nu presupune ca noul joc/configuratia sunt complete.
+
+3. CABLAREA V2 — NUMAI CU ALIMENTAREA OPRITA
+Nu introduce direct PMOD-urile QSPI in BIDIR pentru V2. Le conectezi cu fire.
+Foloseste numele semnalelor de pe PCB; numerotarea PMOD1..8 din documentatia
+QSPI desemneaza opt semnale si NU coincide cu numerotarea fizica 1..12 VGA.
+Toate modulele: GND comun si VCC=3.3V de pe placa, niciodata 5V pe PMOD.
+
+Semnal placa          B: modul Flash       A: modul RAM
+BIDIR uio0            SD0/MOSI             -
+BIDIR uio1            SD1/MISO             -
+BIDIR uio2            SD2                  -
+BIDIR uio3            SD3                  -
+BIDIR uio4            -                    SD0/MOSI
+BIDIR uio5            -                    SD1/MISO
+BIDIR uio6            -                    SD2
+BIDIR uio7            -                    SD3
+OUTPUT uo4            SCK                  SCK
+OUTPUT uo5            CS0 (Flash)          -
+OUTPUT uo6            -                    CS1 (RAM A)
+3.3V                  CS1 si CS2           CS0 si CS2
+GND                   GND                  GND
+3.3V                  VCC                  VCC
+
+CS-urile nefolosite trebuie tinute la 1; nu le lasa flotante si nu le lega la
+alte iesiri FPGA. SCK comun se ramifica spre ambele module; fire scurte.
+Nu lega impreuna SD0..SD3 ale celor doua module: datele sunt independente.
+
+VGA — conectare prin fire, NU conectorul OUTPUT complet:
+uo0 -> Tiny VGA pin 1 (R1) si pin 7 (R0)
+uo1 -> Tiny VGA pin 2 (G1) si pin 8 (G0)
+uo2 -> Tiny VGA pin 3 (B1) si pin 9 (B0)
+uo3 -> Tiny VGA pin 4 (VS)
+uo7 -> Tiny VGA pin 10 (HS)
+GND -> Tiny VGA pini 5/11; 3.3V -> pini 6/12.
+Legarea ambelor intrari de culoare la acelasi bit produce RGB111 la intensitate
+maxima. Nu uni iesirile uo0 si uo4: uo4 este acum SCK! La fel uo5/uo6 sunt CS,
+nu componente de culoare. Numerotarea VGA de mai sus este fizica, conform
+schemei PMOD. Pastreaza alimentarea USB-A a convertorului VGA-HDMI.
+
+Gamepad PMOD ramane conectat normal la INPUT. Decoder: ui4=latch, ui5=clock,
+ui6=data; aceeasi conventie ca in proiectul original verificat pe placa.
+
+4. PORNIRE SI TEST
+Alimenteaza dupa verificarea firelor. Asteapta incarcarea decorului; nu este
+instantanee. Ar trebui sa apara NEON BREAKER, 5 randuri de caramizi si paleta.
+Testeaza stanga/dreapta, A/B, coliziune si scor, START, SELECT si pierderea vietii.
+Daca nu functioneaza, noteaza daca exista sincronizare VGA, decor si raspuns
+la controller. Opreste alimentarea inainte de orice recablare.
+
+5. REVENIRE LA VARIANTA ORIGINALA
+Cat placa este inca legata CORECT pentru V2 si alimentata prin USB:
+python3 select_original_next_boot.py
+Scriptul selecteaza tt_um_neon_breaker, pastreaza Flash-urile nemodificate si
+tine FPGA in reset. Opreste alimentarea. Scoate firele V2, pune A direct in
+BIDIR, VGA direct in OUTPUT si Gamepad in INPUT. Reporneste.
+Pentru a reveni ulterior la V2, repeta pregatirea pasului 2 cu B; sectoarele
+identice nu se rescriu. Cele doua bitstreamuri au nume diferite pe placa.
+
+VERIFICARI SI LIMITE
+Testele software si RTL sunt in verification/. Simularea integrata pleaca
+dintr-un checkpoint pentru a scurta rularea; pornirea CPU de la zero este
+testata separat. Nu este inca un test fizic pe V2. Uploaderul V2 este adaptat
+din cel folosit pe placa originala; modul staging trebuie verificat la incarcare.
+Timingul intern FPGA nu certifica intarzierile externe ale firelor/memoriilor.
+Nu este necesara reducerea registrelor sau bufferelor pentru FPGA.
+
+SURSE PINOUT
+https://github.com/mole99/qspi-pmod (numele SD/CS/SCK)
+https://github.com/mole99/tiny-vga (pinout fizic VGA 1..12)

@@ -1,0 +1,25 @@
+V2 CU GAMEPAD PMOD — verificare finala 2026-11-20
+
+iCE40UP5K SG48, FabricFox v2, OSS-CAD-Suite 2026-11-16, seed 10.
+Sinteza, verificare structurala, plasare/rutare si icepack: PASS.
+Celule logice: 1779 / 5280 (33.69%)
+RAM 4 Kib: 8 / 30 (26.67%); DSP: 3 / 8 (37.5%).
+Fmax intern dupa rutare: 32.19 MHz, PASS la tinta 25.25 MHz.
+Bitstream: fpga/build/tt_um_microcontroller_v2.bin, identic cu
+software/neon_breaker/tt_um_neon_breaker_v2.bin pentru instalare.
+
+Versiunea precedenta FARA decoder avea 1681 LC si Fmax 31.78 MHz;
+raportul si bitstreamul ei sunt pastrate in software/neon_breaker/backups/before_gamepad.
+
+Top pastreaza butoane directe implicit (GAMEPAD_PMOD=0), iar wrapperul FPGA
+activeaza decoderul (GAMEPAD_PMOD=1). Jocul nu adauga memorie ROM interna:
+instructiunile sunt in Flash extern, framebuffer/decor in PSRAM externa.
+
+6 teste RTL trecute, plus regresiile software. Date complete si hash-uri:
+fpga/build/verification_manifest.json si software/neon_breaker/verification/.
+Nu a fost incarcat pe placa. Timingul extern QSPI/cablurile nu sunt validate
+prin timingul intern. Pinoutul V2 difera de varianta originala; vezi TESTARE.txt.
+Rebuild: activa OSS-CAD-Suite, apoi din radacina V2:
+python3 fpga/build.py --pcf fpga/tt_fpga_fabricfoxv2.pcf
+Teste joc: python3 software/neon_breaker/check_game.py
+Teste RTL: python3 software/neon_breaker/run_rtl.py --all

@@ -1,0 +1,6 @@
+`define NEON_WORDS 12133
+`define NEON_FRAME_PC 8519
+`define NEON_WAIT_PC 8513
+`define NEON_X 20481
+`define NEON_Y 20482
+`define NEON_PX 20480

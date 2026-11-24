@@ -1,0 +1,116 @@
+{
+  "date": "2026-11-20",
+  "device": "iCE40UP5K SG48 / FabricFox v2",
+  "controller": "Gamepad PMOD enabled in FPGA wrapper, top default remains direct buttons",
+  "toolchain": "OSS-CAD-Suite 2026-11-16",
+  "seed": 10,
+  "timing": {
+    "clk$SB_IO_IN_$glb_clk": {
+      "achieved": 32.18745803833008,
+      "constraint": 25.25
+    }
+  },
+  "utilization": {
+    "ICESTORM_DSP": {
+      "available": 8,
+      "used": 3
+    },
+    "ICESTORM_HFOSC": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_LC": {
+      "available": 5280,
+      "used": 1779
+    },
+    "ICESTORM_LFOSC": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_PLL": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_RAM": {
+      "available": 30,
+      "used": 8
+    },
+    "ICESTORM_SPRAM": {
+      "available": 4,
+      "used": 0
+    },
+    "IO_I3C": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_FILTER_50NS": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_GB": {
+      "available": 8,
+      "used": 5
+    },
+    "SB_I2C": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_IO": {
+      "available": 39,
+      "used": 26
+    },
+    "SB_LEDDA_IP": {
+      "available": 1,
+      "used": 0
+    },
+    "SB_RGBA_DRV": {
+      "available": 1,
+      "used": 0
+    },
+    "SB_SPI": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_WARMBOOT": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "rtl_tests_passed": [
+    "tb_cpu_mul",
+    "tb_cpu_simple",
+    "tb_gamepad_input",
+    "tb_neon_cpu",
+    "tb_neon_qspi",
+    "tb_qspi_ram_simple"
+  ],
+  "functional_tests": [
+    "check_game.py: 1800 gameplay updates, all levels, score, collisions, restart",
+    "check_paddle_flicker.py: per-STORE regression"
+  ],
+  "game_bytes": 48532,
+  "program_sha256": "c438abefd6c6f97e0752f47ce7a175d4c340931ba06082ef38778d846b946b33",
+  "bitstream_sha256": "6d5e61b4d4f9a552d941da7dabd89dcc1f2f3d29ec126c0faefa9cadbc69c57c",
+  "files_sha256": {
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/cpu_core.sv": "f1c62a581d7343e18e761c2dd026d2b971f2d05008a2497b9c2692af05adc780",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/gamepad_input.sv": "cb51259d51bd84d1d5f35cdd1f37f875b22c7d48ebf6d5113aebe8dfe0bb7a35",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/input_sync.sv": "2c8a59d513b3627668e077cafd0abb7f70bfb0b9ec19adb6abbd3ddc42b19991",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/memory_map.sv": "7c1a5c360d3c4dc3c9202f3e1ab05f04c876704d3f6330a0ace3dd46ffa81f17",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_clock.sv": "8b3fe81fd73ecb81c8915ce4e480043bc301501113c5f8c0092692c431cf1b47",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_flash_controller.sv": "e77e470e87d8c1a58605991d1648b90041e3da91131644189601357d51d8c041",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_ram_controller.sv": "1eff8c4f81445748476a12eea244dae8d2b49c24e5acc629cfc4bbfd7f7a913c",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/ram_arbiter.sv": "1a291f26a85a20b6e936f7714bb539d27873af3fa6ce2a04fce51a53c725ad5b",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/top.sv": "21489532e3cb234e5ef79c63f2bb754ff19cacd3903896a77d13fdbf0ab6ddfe",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/vga_timing.sv": "dc85bbfbcbe1c990fbef62845e9a7146d6800d54c6cff94048d84503779f8d72",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/video_line_buffer.sv": "20ed5b64e1a4527357382082c8b3fefb35400edc7664dec8f605dbdec096370f",
+    "fpga/tt_fpga_top.v": "06e664752223dc89169ccaf5f2c36b683967728bd4401d9849ac209db9d165ac",
+    "fpga/tt_fpga_fabricfoxv2.pcf": "4024dded40dc5298e94e474eacbc404b2ad606872eb8022efd18e3af9ce1da81",
+    "software/neon_breaker/build_game.py": "09e9a7e98d140653dcb07667e552187eb703977cc875dbf4e5493ed96773d52c",
+    "software/neon_breaker/upload.py": "9ea4f69b85efc51145ffa4dc3194e3e7ae0afa650cba1cd4671e93e113158296",
+    "software/neon_breaker/select_original_next_boot.py": "34967096fa32eba35546680a5909afeed96b5c7c0d49165c146f52d837401a8d"
+  },
+  "hardware_uploaded": false,
+  "hardware_test": "Pending; requires V2 wiring in TESTARE.txt",
+  "external_qspi_timing": "Not board-delay constrained by FPGA frequency-only build",
+  "integrated_simulation": "Checkpoint start, 8 game updates: six around 16.67 ms, one brick-hit update 33.339 ms; 768170 system clock samples with both chip selects low. Cold CPU initialization tested separately."
+}

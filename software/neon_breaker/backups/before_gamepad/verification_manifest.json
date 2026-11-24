@@ -1,0 +1,105 @@
+{
+  "device": "iCE40UP5K",
+  "package": "SG48",
+  "board": "FabricFox v2",
+  "date": "2026-11-20",
+  "toolchain": "OSS-CAD-Suite 2026-11-16",
+  "seed": 10,
+  "target_mhz": 25.25,
+  "timing_report_fmax": {
+    "clk$SB_IO_IN_$glb_clk": {
+      "achieved": 31.78336524963379,
+      "constraint": 25.25
+    }
+  },
+  "utilization": {
+    "ICESTORM_DSP": {
+      "available": 8,
+      "used": 3
+    },
+    "ICESTORM_HFOSC": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_LC": {
+      "available": 5280,
+      "used": 1681
+    },
+    "ICESTORM_LFOSC": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_PLL": {
+      "available": 1,
+      "used": 0
+    },
+    "ICESTORM_RAM": {
+      "available": 30,
+      "used": 8
+    },
+    "ICESTORM_SPRAM": {
+      "available": 4,
+      "used": 0
+    },
+    "IO_I3C": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_FILTER_50NS": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_GB": {
+      "available": 8,
+      "used": 5
+    },
+    "SB_I2C": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_IO": {
+      "available": 39,
+      "used": 26
+    },
+    "SB_LEDDA_IP": {
+      "available": 1,
+      "used": 0
+    },
+    "SB_RGBA_DRV": {
+      "available": 1,
+      "used": 0
+    },
+    "SB_SPI": {
+      "available": 2,
+      "used": 0
+    },
+    "SB_WARMBOOT": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "bitstream_bytes": 104090,
+  "bitstream_sha256": "ae292f3088ef232fe3252bc1e36d7d819c1e2603a894c7a409410bcddd26ec6d",
+  "files_sha256": {
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/cpu_core.sv": "f1c62a581d7343e18e761c2dd026d2b971f2d05008a2497b9c2692af05adc780",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/input_sync.sv": "2c8a59d513b3627668e077cafd0abb7f70bfb0b9ec19adb6abbd3ddc42b19991",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/memory_map.sv": "7c1a5c360d3c4dc3c9202f3e1ab05f04c876704d3f6330a0ace3dd46ffa81f17",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_clock.sv": "8b3fe81fd73ecb81c8915ce4e480043bc301501113c5f8c0092692c431cf1b47",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_flash_controller.sv": "e77e470e87d8c1a58605991d1648b90041e3da91131644189601357d51d8c041",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/qspi_ram_controller.sv": "1eff8c4f81445748476a12eea244dae8d2b49c24e5acc629cfc4bbfd7f7a913c",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/ram_arbiter.sv": "1a291f26a85a20b6e936f7714bb539d27873af3fa6ce2a04fce51a53c725ad5b",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/top.sv": "32e583da9339b400909182fad252b274421ccf4d21f163c5d95a5a04eeb0b635",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/vga_timing.sv": "dc85bbfbcbe1c990fbef62845e9a7146d6800d54c6cff94048d84503779f8d72",
+    "Microcontroller_V2/Microcontroller_V2.srcs/sources_1/new/video_line_buffer.sv": "20ed5b64e1a4527357382082c8b3fefb35400edc7664dec8f605dbdec096370f",
+    "fpga/tt_fpga_top.v": "12aa496d5c63fa1d834a64070cf96775669a955fe017cfb989cc6a0382dbf686",
+    "fpga/tt_fpga_fabricfoxv2.pcf": "4024dded40dc5298e94e474eacbc404b2ad606872eb8022efd18e3af9ce1da81",
+    "fpga/build.py": "9d5e84273ecce0bd156a75575bbe3cc1d524d194b5557b4805b5dc49bd9d8eb5"
+  },
+  "result": "PASS synthesis check, placement, routing, internal clock timing and bitstream generation",
+  "hardware_programmed": false,
+  "limitations": [
+    "External QSPI setup/hold including memory and board delays is not constrained by this frequency-only build.",
+    "V2 needs different external wiring from the shared-QSPI RGB222 hardware setup.",
+    "No ASIC area/tile inference from these FPGA results."
+  ]
+}

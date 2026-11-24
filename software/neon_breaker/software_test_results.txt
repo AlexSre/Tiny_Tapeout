@@ -1,0 +1,3 @@
+PASS encoded-ISA execution: initialization, bounds, controls, pause, collisions, scoring, 1800 natural-play updates, multi-hit bricks, levels, victory, game over, retry.
+Worst sampled update (instructions, accesses, framebuffer writes): (2786, 947, 402)
+Timing is measured separately in RTL; this interpreter is functional only.

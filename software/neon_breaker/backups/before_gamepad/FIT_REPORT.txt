@@ -1,0 +1,42 @@
+Verificare dimensiune FPGA Tiny_Tapeout_V2 — 2026-11-20
+
+Tinta: Lattice iCE40UP5K, SG48, FabricFox v2.
+Sursele SystemVerilog V2 nu au fost modificate.
+Wrapperul FPGA conecteaza ena=1 si mapeaza liniile bidirectionale prin SB_IO.
+PCF preluat din configuratia FabricFox v2 folosita anterior; eliminate doar
+constrangerile pentru porturi inexistente (intclk si rgb).
+
+Etape: Yosys synth_ice40 -dsp, check -assert, nextpnr-ice40 plasare/rutare
+cu pinii fizici fixati, seed 10, tinta 25.25 MHz, icepack.
+Toate etapele au reusit. Nicio programare a placii.
+
+Resurse dupa impachetare pentru plasare/rutare:
+Celule logice: 1681 / 5280 (31.84%)
+RAM 4 Kib:       8 / 30   (26.67%)
+DSP:            3 / 8    (37.50%)
+I/O:           26 / 39   (66.67%)
+Global buffers: 5 / 8    (62.50%)
+PLL:            0 / 1
+SPRAM:          0 / 4
+LUT4 dupa sinteza: 1364; flip-flop-uri: 796.
+
+Timing intern dupa rutare: Fmax 31.78 MHz, PASS la 25.25 MHz.
+Frecventa SCK rezultata din RTL: 12.625 MHz pentru clk=25.25 MHz.
+Acesta este un rezultat de timing intern; nu certifica setup/hold QSPI
+extern cu intarzierile memoriei, cablurilor si placii. Nu masoara tile-uri ASIC.
+
+Concluzie: designul actual incape cu marja pe iCE40UP5K si indeplineste
+frecventa interna ceruta. Nu sunt necesare reduceri de registre/buffere
+pentru incadrare. Alocarea fizica RAM este in blocuri, nu doar biti utili.
+Conectarea perifericelor trebuie adaptata pinoutului V2 inainte de incarcare.
+
+Reproducere, dupa activarea OSS-CAD-Suite:
+python3 fpga/build.py --pcf fpga/tt_fpga_fabricfoxv2.pcf
+Executati din radacina Tiny_Tapeout_V2.
+
+Artefacte:
+fpga/build/synth.log — sinteza si verificari structurale
+fpga/build/nextpnr.log — resurse, plasare, rutare, timing
+fpga/build/timing.json — raport detaliat automat
+fpga/build/verification_manifest.json — hash-uri surse/configuratie/bitstream
+fpga/build/tt_um_microcontroller_v2.bin — bitstream generat, neincarcat
